@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-// --- 🦁 究極の生態学的データ + 英国流正当化メッセージ ---
+// --- 🦁 動物階級データ（最新版） ---
 const ANIMAL_TIERS = [
   { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。空を飛びながら脳を半分ずつ寝かせているのかい？墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? Are you sleeping with half your brain while flying? I suggest landing before you crash." }] },
   { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？キリンの真似かい？脳への血圧が心配だから、早く長い首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe, are we? I'm worried about your blood pressure; give that long neck a rest." }] },
@@ -109,7 +109,7 @@ export default function RoyalSleepCardApp() {
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>CERTIFIED HOURS</p>
                 <p style={{ fontSize: '22px', margin: '2px 0', fontWeight: 'bold' }}>{result.hours}h</p>
-                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Species: {result.animal.nameEn}</p>
+                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Certified by Royal Bank</p>
               </div>
             </div>
 
@@ -126,10 +126,24 @@ export default function RoyalSleepCardApp() {
         </div>
       )}
 
-      {/* 投げ銭 */}
+      {/* 💡 ここにあなたのBMACリンクを反映しました */}
       <div style={{ marginTop: '60px', textAlign: 'center', borderTop: '2px solid #D1D1C6', paddingTop: '30px' }}>
-        <p style={{ fontSize: '14px', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>The Manager's tea cup is currently empty.</p>
-        <a href="YOUR_LINK_HERE" target="_blank" style={{ color: '#004225', fontWeight: 'bold', textDecoration: 'none', border: '2px solid #004225', padding: '12px 24px', borderRadius: '4px', display: 'inline-block', backgroundColor: '#fff' }}>
+        <p style={{ fontSize: '14px', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>Found this bank helpful? The Manager's tea cup is empty.</p>
+        <a 
+          href="https://buymeacoffee.com/royal_sleep_manage" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{ 
+            color: '#004225', 
+            fontWeight: 'bold', 
+            textDecoration: 'none', 
+            border: '2px solid #004225', 
+            padding: '12px 24px', 
+            borderRadius: '4px', 
+            display: 'inline-block',
+            backgroundColor: '#fff'
+          }}
+        >
           🫖 Buy the Manager a proper brew (£2.50)
         </a>
       </div>
