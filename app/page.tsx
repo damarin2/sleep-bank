@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 
-// --- 🦁 英国紳士な動物たちと査定メッセージ ---
+// --- 🦁 生態学的データに基づいた動物階級 ---
 const ANIMAL_TIERS = [
-  { maxHours: 4, animals: [{ nameJa: "アーバン・フォックス", nameEn: "Urban Fox", emoji: "🦊", messageJa: "住宅ローンの金利で眠れなかったのかい？ひどい顔だよ。", messageEn: "Late night worrying about the mortgage rates? You look dreadful." }] },
-  { maxHours: 6, animals: [{ nameJa: "ハト", nameEn: "Pigeon", emoji: "🕊️", messageJa: "M25の渋滞を避けるための早起きかな？悲惨な日常だね。", messageEn: "Up early to beat the M25 traffic? A truly tragic existence." }] },
-  { maxHours: 8, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "週末に庭の雑草を猛烈に抜き、天気の文句を言うには十分だ。", messageEn: "Enough energy to aggressively weed the garden and complain about the weather." }] },
-  { maxHours: 10, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "完璧で賢明な8時間。BBCラジオ4を聴く準備は万端だ。", messageEn: "A perfectly sensible 8 hours. Ready for BBC Radio 4." }] },
-  { maxHours: 14, animals: [{ nameJa: "ハイランド・カウ", nameEn: "Highland Cow", emoji: "🐂", messageJa: "今日はバンクホリデー（祝日）に違いない。のんびりしたまえ。", messageEn: "Must be a bank holiday. Enjoy doing absolutely nothing." }] },
-  { maxHours: 99, animals: [{ nameJa: "貴族の飼い猫", nameEn: "Aristocrat's Cat", emoji: "🐈", messageJa: "引退した貴族のような睡眠だ。仕事はあるのかい？", messageEn: "Sleeping like a retired aristocrat. Do you even have a job?" }] }
+  { maxHours: 3.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。常に警戒を怠らないのは立派だよ。", messageEn: "Sleeping while standing? A true herbivore. Your vigilance is commendable, if not slightly paranoid." }] },
+  { maxHours: 5.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "食べるのに忙しくて寝る暇がないんだね。巨体を維持するのは大変だろう？", messageEn: "Too busy eating to sleep? I suppose maintaining that bulk takes priority over rest." }] },
+  { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "目を開けたまま寝ていないかい？人間並みの睡眠時間だが、心休まる暇はなさそうだ。", messageEn: "Sleeping with eyes open? You’ve reached human levels, yet you still look startled." }] },
+  { maxHours: 10.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "王室の愛犬らしい、実にお利口な睡眠時間だ。散歩の準備は万端かな？", messageEn: "A sensible, royal nap. Ready for a brisk walk and some BBC Radio 4?" }] },
+  { maxHours: 13.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "巣穴にこもってじっくり寝たね。夜中に庭を荒らす準備は万端というわけだ。", messageEn: "Deep in your sett, I presume. Perfectly rested to cause chaos in the garden tonight." }] },
+  { maxHours: 99, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "もはや狩りすら忘れたのかい？エネルギー温存という名の、ただの怠慢だね。", messageEn: "Forgotten how to hunt? 'Energy conservation' is a very polite way to say lazy." }] }
 ];
 
 export default function RoyalSleepCardApp() {
@@ -28,32 +28,30 @@ export default function RoyalSleepCardApp() {
 
     const hours = getHours(bedtime, wakeupTime);
     const score = parseInt(moodScore);
-    
-    // 💡 査定計算: 単価5万ポンド × 時間 × (スコア/満点)
     const rawQuid = (hours * 50000) * (score / 8);
-    const formattedQuid = new Intl.NumberFormat('en-GB', { 
-      notation: 'compact', 
-      maximumFractionDigits: 1 
-    }).format(rawQuid);
+    const formattedQuid = new Intl.NumberFormat('en-GB', { notation: 'compact', maximumFractionDigits: 1 }).format(rawQuid);
 
-    // 💡 偉人格付けの根拠
+    // 💡 偉人格付けの根拠（生態学的理由）
     let legend = "";
     let reason = "";
-    if (hours <= 4) {
+    if (hours <= 3.5) {
       legend = "Napoleon Class";
-      reason = "Less than 4h: Short sleepers who focus on conquest over comfort.";
-    } else if (hours <= 6) {
+      reason = "Ecological Category: Herbivore Alert. Like a Horse, you barely rest to stay safe.";
+    } else if (hours <= 5.5) {
       legend = "Murakami Class";
-      reason = "5-6h: Methodical rest for the disciplined mind.";
-    } else if (hours <= 9) {
+      reason = "Ecological Category: Giant Grazer. Like an Elephant, survival takes more time than sleep.";
+    } else if (hours <= 8.5) {
       legend = "Obama & Gates Class";
-      reason = "7-9h: The golden standard for global decision makers.";
-    } else if (hours <= 11) {
+      reason = "Ecological Category: Social Mammal. Like a Rabbit, you maintain a balanced yet cautious rest.";
+    } else if (hours <= 11.5) {
       legend = "Einstein Class";
-      reason = "10h+: Essential deep recovery for high-level genius.";
+      reason = "Ecological Category: Protected Pet. Like a Dog, you have the luxury of secure, long sleep.";
+    } else if (hours <= 13.5) {
+      legend = "Aristocrat Class";
+      reason = "Ecological Category: Burrower. Like a Badger, you value the darkness of your den.";
     } else {
       legend = "King Kazu Class";
-      reason = "12h+: Professional-grade physical and mental restoration.";
+      reason = "Ecological Category: Apex Predator. Like a Cat, you sleep because you have no enemies.";
     }
 
     const animal = ANIMAL_TIERS.find(t => hours < t.maxHours)?.animals[0];
@@ -73,7 +71,6 @@ export default function RoyalSleepCardApp() {
       
       <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '20px', letterSpacing: '2px', marginBottom: '30px' }}>🏛️ THE ROYAL SLEEP BANK</h1>
 
-      {/* --- 入力セクション（視認性向上版） --- */}
       <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px' }}>
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
           <div style={{ flex: 1 }}>
@@ -92,11 +89,10 @@ export default function RoyalSleepCardApp() {
           </select>
         </div>
         <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px' }}>
-          ISSUE STATEMENT
+          ISSUE AUDIT STATEMENT
         </button>
       </div>
 
-      {/* --- 💡 なぜその結果なのかがわかる「カード型UI」 --- */}
       {result && (
         <div style={{ animation: 'fadeIn 0.6s ease-out' }}>
           <div style={{ 
@@ -110,17 +106,14 @@ export default function RoyalSleepCardApp() {
             textAlign: 'center',
             position: 'relative'
           }}>
-            <p style={{ fontSize: '11px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>AUDIT REPORT</p>
-            
+            <p style={{ fontSize: '11px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>OFFICIAL AUDIT</p>
             <h2 style={{ fontSize: '28px', margin: '0', fontWeight: 'normal' }}>🎖️ {result.legend}</h2>
-            {/* 💡 偉人格付けの根拠を表示 */}
             <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '8px 0 20px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
               {result.reason}
             </p>
 
             <div style={{ fontSize: '70px', margin: '15px 0' }}>{result.animal.emoji}</div>
 
-            {/* 💡 残高と計算の内訳を表示 */}
             <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0', backgroundColor: 'rgba(255,255,255,0.07)', padding: '20px 10px', borderRadius: '12px' }}>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>TOTAL BALANCE</p>
@@ -131,7 +124,7 @@ export default function RoyalSleepCardApp() {
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>SLEEP DURATION</p>
                 <p style={{ fontSize: '24px', margin: '2px 0', fontWeight: 'bold' }}>{result.hours}h</p>
-                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Certified by Royal Bank</p>
+                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Certified Biological Data</p>
               </div>
             </div>
 
@@ -144,7 +137,7 @@ export default function RoyalSleepCardApp() {
           </div>
 
           <button onClick={() => {
-            const text = `🏛️ The Royal Sleep Bank\n🎖️ Rating: ${result.legend}\n🛌 Sleep: ${result.hours}h\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
+            const text = `🏛️ The Royal Sleep Bank\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
           }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}>
             𝕏 SHARE YOUR AUDIT
@@ -152,25 +145,14 @@ export default function RoyalSleepCardApp() {
         </div>
       )}
 
-      {/* --- 投げ銭セクション（世界観の作り込み版） --- */}
+      {/* 投げ銭 */}
       <div style={{ marginTop: '60px', textAlign: 'center', borderTop: '2px solid #D1D1C6', paddingTop: '30px' }}>
         <p style={{ fontSize: '14px', color: '#333', fontStyle: 'italic', marginBottom: '15px' }}>
-          Satisfied with our banking services? <br/>
           The Manager's tea cup is currently empty.
         </p>
-        <a href="YOUR_LINK_HERE" target="_blank" style={{ 
-          color: '#004225', 
-          fontWeight: 'bold', 
-          textDecoration: 'none', 
-          border: '2px solid #004225', 
-          padding: '12px 24px', 
-          borderRadius: '4px', 
-          display: 'inline-block',
-          backgroundColor: '#fff'
-        }}>
+        <a href="YOUR_LINK_HERE" target="_blank" style={{ color: '#004225', fontWeight: 'bold', textDecoration: 'none', border: '2px solid #004225', padding: '12px 24px', borderRadius: '4px', display: 'inline-block', backgroundColor: '#fff' }}>
           🫖 Buy the Manager a proper brew (£2.50)
         </a>
-        <p style={{ fontSize: '10px', color: '#888', marginTop: '10px' }}>*Investment in tea does not guarantee better sleep.</p>
       </div>
 
       <style jsx>{`
