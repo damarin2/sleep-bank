@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-// --- 型の定義 (監査基準) ---
+// --- 型の定義 ---
 interface Animal {
   nameJa: string;
   nameEn: string;
@@ -85,6 +85,7 @@ export default function RoyalSleepCardApp() {
       
       <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '22px', letterSpacing: '3px', marginBottom: '30px', fontWeight: 'bold' }}>🏛️ THE ROYAL SLEEP BANK</h1>
 
+      {/* 入力フォーム */}
       <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px', boxShadow: '5px 5px 0px #333' }}>
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
           <div style={{ flex: 1 }}>
@@ -99,7 +100,7 @@ export default function RoyalSleepCardApp() {
         <div style={{ marginBottom: '25px' }}>
           <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>MORNING CONDITION (1-8)</label>
           <select value={moodScore} onChange={(e) => setMoodScore(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', backgroundColor: '#fff' }}>
-            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n.toString()}>{n === 8 ? "8 (Splendid)" : n === 1 ? "1 (Ghastly)" : n}</option>)}
+            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n.toString()}>{n}</option>)}
           </select>
         </div>
         <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px' }}>
@@ -107,6 +108,7 @@ export default function RoyalSleepCardApp() {
         </button>
       </div>
 
+      {/* 結果表示 */}
       {result && (
         <div style={{ marginTop: '20px' }}>
           <div style={{ 
@@ -145,17 +147,22 @@ export default function RoyalSleepCardApp() {
             <p style={{ fontSize: '12px', opacity: 0.8, margin: 0 }}>({result.animal.messageJa})</p>
           </div>
 
-          <button onClick={() => {
-            const text = `🏛️ The Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
-          }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}>
+          {/* 𝕏 シェアボタン（復活！） */}
+          <button 
+            onClick={() => {
+              const text = `🏛️ The Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
+              window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
+            }} 
+            style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}
+          >
             𝕏 SHARE YOUR STATEMENT
           </button>
         </div>
       )}
 
+      {/* フッター（投げ銭リンクは跡形もありません） */}
       <div style={{ marginTop: '50px', textAlign: 'center', color: '#888' }}>
-        <p style={{ fontSize: '11px', letterSpacing: '1px' }}>© 2026 THE ROYAL SLEEP BANK OF BRITAIN</p>
+        <p style={{ fontSize: '10px', letterSpacing: '1px' }}>© 2026 THE ROYAL SLEEP BANK OF BRITAIN</p>
       </div>
 
     </div>
