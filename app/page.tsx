@@ -2,14 +2,17 @@
 
 import React, { useState } from 'react';
 
-// --- 🦁 生態学的データに基づいた動物階級 ---
+// --- 🦁 究極の生態学的データ + 英国流正当化メッセージ ---
 const ANIMAL_TIERS = [
-  { maxHours: 3.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。常に警戒を怠らないのは立派だよ。", messageEn: "Sleeping while standing? A true herbivore. Your vigilance is commendable, if not slightly paranoid." }] },
-  { maxHours: 5.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "食べるのに忙しくて寝る暇がないんだね。巨体を維持するのは大変だろう？", messageEn: "Too busy eating to sleep? I suppose maintaining that bulk takes priority over rest." }] },
-  { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "目を開けたまま寝ていないかい？人間並みの睡眠時間だが、心休まる暇はなさそうだ。", messageEn: "Sleeping with eyes open? You’ve reached human levels, yet you still look startled." }] },
-  { maxHours: 10.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "王室の愛犬らしい、実にお利口な睡眠時間だ。散歩の準備は万端かな？", messageEn: "A sensible, royal nap. Ready for a brisk walk and some BBC Radio 4?" }] },
-  { maxHours: 13.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "巣穴にこもってじっくり寝たね。夜中に庭を荒らす準備は万端というわけだ。", messageEn: "Deep in your sett, I presume. Perfectly rested to cause chaos in the garden tonight." }] },
-  { maxHours: 99, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "もはや狩りすら忘れたのかい？エネルギー温存という名の、ただの怠慢だね。", messageEn: "Forgotten how to hunt? 'Energy conservation' is a very polite way to say lazy." }] }
+  { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。空を飛びながら脳を半分ずつ寝かせているのかい？墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? Are you sleeping with half your brain while flying? I suggest landing before you crash." }] },
+  { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？キリンの真似かい？脳への血圧が心配だから、早く長い首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe, are we? I'm worried about your blood pressure; give that long neck a rest." }] },
+  { maxHours: 4.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。常に警戒を怠らないのは立派だよ。", messageEn: "Sleeping while standing? A true herbivore. Your vigilance is commendable, if not slightly paranoid." }] },
+  { maxHours: 6.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "巨体を維持するために食べるのが忙しいんだね。睡眠不足で足元がふらつかないように。", messageEn: "Too busy eating to sleep? I suppose maintaining that bulk takes priority over a proper nap." }] },
+  { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "人間並みの睡眠時間だが、心休まる暇はなさそうだ。目を開けたまま寝ていないかい？", messageEn: "Human levels of rest, yet you still look startled. Are you sleeping with your eyes open?" }] },
+  { maxHours: 11.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "実にお利口な睡眠時間だ。ロイヤルな気分で散歩に出かける準備はできているかな？", messageEn: "A sensible, royal nap. Ready for a brisk walk and some BBC Radio 4?" }] },
+  { maxHours: 14.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "今日はバンクホリデー（祝日）に違いない。巣穴（Sett）でのんびりしたまえ。夜中に庭を荒らす気力も十分だね。", messageEn: "Must be a bank holiday. Enjoy doing absolutely nothing in your sett. You're well-rested enough to cause chaos tonight." }] },
+  { maxHours: 19.5, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "戦略的休息のマスターだね。一日を無駄にしたのではない。人間が到底たどり着けない、至高の安らぎに到達しただけなのだから。", messageEn: "A masterclass in strategic repose. You haven’t wasted the day; you’ve merely achieved a level of serenity humans can only dream of." }] },
+  { maxHours: 99, animals: [{ nameJa: "コアラ", nameEn: "Koala", emoji: "🐨", messageJa: "22時間。おめでとう、君はユーカリの毒にやられたコアラだ。もはや銀行口座を解約しても気づかないだろうね。", messageEn: "22 hours. Congratulations, you’re a koala dazed by eucalyptus. You wouldn’t even notice if we closed your account." }] }
 ];
 
 export default function RoyalSleepCardApp() {
@@ -31,39 +34,20 @@ export default function RoyalSleepCardApp() {
     const rawQuid = (hours * 50000) * (score / 8);
     const formattedQuid = new Intl.NumberFormat('en-GB', { notation: 'compact', maximumFractionDigits: 1 }).format(rawQuid);
 
-    // 💡 偉人格付けの根拠（生態学的理由）
     let legend = "";
     let reason = "";
-    if (hours <= 3.5) {
-      legend = "Napoleon Class";
-      reason = "Ecological Category: Herbivore Alert. Like a Horse, you barely rest to stay safe.";
-    } else if (hours <= 5.5) {
-      legend = "Murakami Class";
-      reason = "Ecological Category: Giant Grazer. Like an Elephant, survival takes more time than sleep.";
-    } else if (hours <= 8.5) {
-      legend = "Obama & Gates Class";
-      reason = "Ecological Category: Social Mammal. Like a Rabbit, you maintain a balanced yet cautious rest.";
-    } else if (hours <= 11.5) {
-      legend = "Einstein Class";
-      reason = "Ecological Category: Protected Pet. Like a Dog, you have the luxury of secure, long sleep.";
-    } else if (hours <= 13.5) {
-      legend = "Aristocrat Class";
-      reason = "Ecological Category: Burrower. Like a Badger, you value the darkness of your den.";
-    } else {
-      legend = "King Kazu Class";
-      reason = "Ecological Category: Apex Predator. Like a Cat, you sleep because you have no enemies.";
-    }
+    if (hours <= 0.5) { legend = "Aviator Class"; reason = "Ecological Alert: Unstoppable momentum. Do you even have a bed?"; }
+    else if (hours <= 2.5) { legend = "Giraffe Class"; reason = "Ecological Alert: Extreme short sleeper. High alert, low rest."; }
+    else if (hours <= 4.5) { legend = "Napoleon Class"; reason = "The standard for those who conquer the world in 4 hours."; }
+    else if (hours <= 8.5) { legend = "World Leader Class"; reason = "A balanced, strategic rest for decision makers."; }
+    else if (hours <= 11.5) { legend = "Einstein Class"; reason = "The essential long sleep required for a genius brain."; }
+    else if (hours <= 14.5) { legend = "Holidaymaker Class"; reason = "Bank Holiday Spirit: Extensive burrowing and relaxation."; }
+    else if (hours <= 19.5) { legend = "The Zen Master"; reason = "Ecological Category: Apex Predator. High-status rest without enemies."; }
+    else { legend = "Hibernation Class"; reason = "Ecological Alert: Eucalyptus overdose. Welcome to 22h of oblivion."; }
 
     const animal = ANIMAL_TIERS.find(t => hours < t.maxHours)?.animals[0];
 
-    setResult({
-      hours: hours.toFixed(1),
-      quid: formattedQuid,
-      score: score,
-      legend: legend,
-      reason: reason,
-      animal: animal
-    });
+    setResult({ hours: hours.toFixed(1), quid: formattedQuid, score: score, legend: legend, reason: reason, animal: animal });
   };
 
   return (
@@ -71,6 +55,7 @@ export default function RoyalSleepCardApp() {
       
       <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '20px', letterSpacing: '2px', marginBottom: '30px' }}>🏛️ THE ROYAL SLEEP BANK</h1>
 
+      {/* 入力エリア */}
       <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px' }}>
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
           <div style={{ flex: 1 }}>
@@ -93,6 +78,7 @@ export default function RoyalSleepCardApp() {
         </button>
       </div>
 
+      {/* 結果カード */}
       {result && (
         <div style={{ animation: 'fadeIn 0.6s ease-out' }}>
           <div style={{ 
@@ -101,65 +87,55 @@ export default function RoyalSleepCardApp() {
             color: '#D4AF37', 
             padding: '30px', 
             borderRadius: '16px', 
-            boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
             border: '2px solid #D4AF37',
             textAlign: 'center',
-            position: 'relative'
+            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
           }}>
             <p style={{ fontSize: '11px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>OFFICIAL AUDIT</p>
-            <h2 style={{ fontSize: '28px', margin: '0', fontWeight: 'normal' }}>🎖️ {result.legend}</h2>
-            <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '8px 0 20px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
+            <h2 style={{ fontSize: '26px', margin: '0' }}>🎖️ {result.legend}</h2>
+            <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '8px 0 15px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
               {result.reason}
             </p>
 
             <div style={{ fontSize: '70px', margin: '15px 0' }}>{result.animal.emoji}</div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0', backgroundColor: 'rgba(255,255,255,0.07)', padding: '20px 10px', borderRadius: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0', backgroundColor: 'rgba(255,255,255,0.07)', padding: '15px 10px', borderRadius: '12px' }}>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>TOTAL BALANCE</p>
-                <p style={{ fontSize: '24px', margin: '2px 0', fontWeight: 'bold' }}>£{result.quid}</p>
+                <p style={{ fontSize: '22px', margin: '2px 0', fontWeight: 'bold' }}>£{result.quid}</p>
                 <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Rate: £50K × {result.hours}h × {result.score}/8</p>
               </div>
               <div style={{ width: '1px', backgroundColor: 'rgba(212, 175, 55, 0.4)' }}></div>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>SLEEP DURATION</p>
-                <p style={{ fontSize: '24px', margin: '2px 0', fontWeight: 'bold' }}>{result.hours}h</p>
-                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Certified Biological Data</p>
+                <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>CERTIFIED HOURS</p>
+                <p style={{ fontSize: '22px', margin: '2px 0', fontWeight: 'bold' }}>{result.hours}h</p>
+                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Species: {result.animal.nameEn}</p>
               </div>
             </div>
 
-            <p style={{ fontSize: '15px', fontStyle: 'italic', lineHeight: '1.6', margin: '20px 0 5px 0' }}>
-              "{result.animal.messageEn}"
-            </p>
-            <p style={{ fontSize: '12px', opacity: 0.8, margin: 0 }}>
-              ({result.animal.messageJa})
-            </p>
+            <p style={{ fontSize: '15px', fontStyle: 'italic', lineHeight: '1.4', margin: '15px 0 5px 0' }}>"{result.animal.messageEn}"</p>
+            <p style={{ fontSize: '11px', opacity: 0.8 }}>({result.animal.messageJa})</p>
           </div>
 
           <button onClick={() => {
             const text = `🏛️ The Royal Sleep Bank\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
-          }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}>
-            𝕏 SHARE YOUR AUDIT
+          }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold' }}>
+            𝕏 SHARE THIS AUDIT
           </button>
         </div>
       )}
 
       {/* 投げ銭 */}
       <div style={{ marginTop: '60px', textAlign: 'center', borderTop: '2px solid #D1D1C6', paddingTop: '30px' }}>
-        <p style={{ fontSize: '14px', color: '#333', fontStyle: 'italic', marginBottom: '15px' }}>
-          The Manager's tea cup is currently empty.
-        </p>
+        <p style={{ fontSize: '14px', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>The Manager's tea cup is currently empty.</p>
         <a href="YOUR_LINK_HERE" target="_blank" style={{ color: '#004225', fontWeight: 'bold', textDecoration: 'none', border: '2px solid #004225', padding: '12px 24px', borderRadius: '4px', display: 'inline-block', backgroundColor: '#fff' }}>
           🫖 Buy the Manager a proper brew (£2.50)
         </a>
       </div>
 
       <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </div>
   );
