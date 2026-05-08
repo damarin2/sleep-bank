@@ -2,8 +2,30 @@
 
 import React, { useState } from 'react';
 
-// --- 🦁 究極の生態学的データ + 英国流ジョーク（完成版） ---
-const ANIMAL_TIERS = [
+// --- 型の定義 (監査基準) ---
+interface Animal {
+  nameJa: string;
+  nameEn: string;
+  emoji: string;
+  messageJa: string;
+  messageEn: string;
+}
+
+interface AnimalTier {
+  maxHours: number;
+  animals: Animal[];
+}
+
+interface ResultData {
+  hours: string;
+  quid: string;
+  score: number;
+  legend: string;
+  reason: string;
+  animal: Animal;
+}
+
+const ANIMAL_TIERS: AnimalTier[] = [
   { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。空を飛びながら脳を半分ずつ寝かせているのかい？墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? Are you sleeping with half your brain while flying? I suggest landing before you crash." }] },
   { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？キリンの真似かい？脳への血圧が心配だから、早く長い首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe, are we? I'm worried about your blood pressure; give that long neck a rest." }] },
   { maxHours: 4.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。常に警戒を怠らないのは立派だよ。", messageEn: "Sleeping while standing? A true herbivore. Your vigilance is commendable, if not slightly paranoid." }] },
@@ -16,13 +38,13 @@ const ANIMAL_TIERS = [
 ];
 
 export default function RoyalSleepCardApp() {
-  const [bedtime, setBedtime] = useState("23:00");
-  const [wakeupTime, setWakeupTime] = useState("06:30");
-  const [moodScore, setMoodScore] = useState("5");
-  const [result, setResult] = useState(null);
+  const [bedtime, setBedtime] = useState<string>("23:00");
+  const [wakeupTime, setWakeupTime] = useState<string>("06:30");
+  const [moodScore, setMoodScore] = useState<string>("5");
+  const [result, setResult] = useState<ResultData | null>(null);
 
   const handleGenerate = () => {
-    const getHours = (s, e) => {
+    const getHours = (s: string, e: string): number => {
       const [sh, sm] = s.split(':').map(Number);
       const [eh, em] = e.split(':').map(Number);
       let diff = (eh + em/60) - (sh + sm/60);
@@ -36,18 +58,26 @@ export default function RoyalSleepCardApp() {
 
     let legend = "";
     let reason = "";
-    if (hours <= 0.5) { legend = "Aviator Class"; reason = "Ecological Alert: Unstoppable momentum. Do you even have a bed?"; }
-    else if (hours <= 2.5) { legend = "Giraffe Class"; reason = "Ecological Alert: Extreme short sleeper. High alert, low rest."; }
-    else if (hours <= 4.5) { legend = "Napoleon Class"; reason = "The standard for those who conquer the world in 4 hours."; }
-    else if (hours <= 8.5) { legend = "World Leader Class"; reason = "A balanced, strategic rest for decision makers."; }
-    else if (hours <= 11.5) { legend = "Einstein Class"; reason = "The essential long sleep required for a genius brain."; }
-    else if (hours <= 14.5) { legend = "Holidaymaker Class"; reason = "Bank Holiday Spirit: Extensive burrowing and relaxation."; }
-    else if (hours <= 19.5) { legend = "The Zen Master"; reason = "Ecological Category: Apex Predator. High-status rest."; }
-    else { legend = "Hibernation Class"; reason = "Ecological Alert: Eucalyptus overdose. Welcome to 22h of oblivion."; }
+    if (hours <= 0.5) { legend = "Aviator Class"; reason = "Ecological Alert: Unstoppable momentum."; }
+    else if (hours <= 2.5) { legend = "Giraffe Class"; reason = "Ecological Alert: Extreme short sleeper."; }
+    else if (hours <= 4.5) { legend = "Napoleon Class"; reason = "The standard for world conquerors."; }
+    else if (hours <= 8.5) { legend = "World Leader Class"; reason = "A balanced, strategic rest."; }
+    else if (hours <= 11.5) { legend = "Einstein Class"; reason = "Essential rest for genius brains."; }
+    else if (hours <= 14.5) { legend = "Holidaymaker Class"; reason = "Bank Holiday Spirit."; }
+    else if (hours <= 19.5) { legend = "The Zen Master"; reason = "Apex Predator: High-status rest."; }
+    else { legend = "Hibernation Class"; reason = "Welcome to 22h of oblivion."; }
 
-    const animal = ANIMAL_TIERS.find(t => hours < t.maxHours)?.animals[0];
+    const tier = ANIMAL_TIERS.find(t => hours < t.maxHours);
+    const animal = tier ? tier.animals[0] : ANIMAL_TIERS[ANIMAL_TIERS.length - 1].animals[0];
 
-    setResult({ hours: hours.toFixed(1), quid: formattedQuid, score: score, legend: legend, reason: reason, animal: animal });
+    setResult({
+      hours: hours.toFixed(1),
+      quid: formattedQuid,
+      score: score,
+      legend: legend,
+      reason: reason,
+      animal: animal
+    });
   };
 
   return (
@@ -55,32 +85,30 @@ export default function RoyalSleepCardApp() {
       
       <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '22px', letterSpacing: '3px', marginBottom: '30px', fontWeight: 'bold' }}>🏛️ THE ROYAL SLEEP BANK</h1>
 
-      {/* --- 入力セクション --- */}
       <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px', boxShadow: '5px 5px 0px #333' }}>
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
           <div style={{ flex: 1 }}>
-            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>BEDTIME</label>
-            <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', boxSizing: 'border-box' }} />
+            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>BEDTIME</label>
+            <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px' }} />
           </div>
           <div style={{ flex: 1 }}>
-            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>WAKE UP</label>
-            <input type="time" value={wakeupTime} onChange={(e) => setWakeupTime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', boxSizing: 'border-box' }} />
+            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>WAKE UP</label>
+            <input type="time" value={wakeupTime} onChange={(e) => setWakeupTime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px' }} />
           </div>
         </div>
         <div style={{ marginBottom: '25px' }}>
-          <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>MORNING CONDITION (1-8)</label>
-          <select value={moodScore} onChange={(e) => setMoodScore(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', backgroundColor: '#fff', boxSizing: 'border-box' }}>
-            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n === 8 ? "8 (Splendid)" : n === 1 ? "1 (Ghastly)" : n}</option>)}
+          <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>MORNING CONDITION (1-8)</label>
+          <select value={moodScore} onChange={(e) => setMoodScore(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', backgroundColor: '#fff' }}>
+            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n.toString()}>{n === 8 ? "8 (Splendid)" : n === 1 ? "1 (Ghastly)" : n}</option>)}
           </select>
         </div>
-        <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px', letterSpacing: '1px' }}>
+        <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px' }}>
           ISSUE AUDIT STATEMENT
         </button>
       </div>
 
-      {/* --- 結果カードセクション --- */}
       {result && (
-        <div style={{ animation: 'fadeIn 0.5s ease-out' }}>
+        <div style={{ marginTop: '20px' }}>
           <div style={{ 
             backgroundColor: '#004225', 
             backgroundImage: 'linear-gradient(145deg, #004225 0%, #002515 100%)',
@@ -89,11 +117,10 @@ export default function RoyalSleepCardApp() {
             borderRadius: '16px', 
             border: '2px solid #D4AF37',
             textAlign: 'center',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-            position: 'relative'
+            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
           }}>
-            <p style={{ fontSize: '10px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>CERTIFIED BY THE ROYAL BANK</p>
-            <h2 style={{ fontSize: '28px', margin: '0', fontWeight: 'normal' }}>🎖️ {result.legend}</h2>
+            <p style={{ fontSize: '10px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>OFFICIAL AUDIT</p>
+            <h2 style={{ fontSize: '28px', margin: '0' }}>🎖️ {result.legend}</h2>
             <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '10px 0 15px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
               {result.reason}
             </p>
@@ -127,10 +154,8 @@ export default function RoyalSleepCardApp() {
         </div>
       )}
 
-      {/* フッター（リンクなしのクリーン版） */}
       <div style={{ marginTop: '50px', textAlign: 'center', color: '#888' }}>
         <p style={{ fontSize: '11px', letterSpacing: '1px' }}>© 2026 THE ROYAL SLEEP BANK OF BRITAIN</p>
-        <p style={{ fontSize: '10px', marginTop: '5px' }}>Where your laziness is our most valued asset.</p>
       </div>
 
     </div>
