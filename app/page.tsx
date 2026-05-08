@@ -147,7 +147,7 @@ export default function RoyalSleepCardApp() {
             <p style={{ fontSize: '12px', opacity: 0.8, margin: 0 }}>({result.animal.messageJa})</p>
           </div>
 
-          {/* 𝕏 シェアボタン（復活！） */}
+          {/* 𝕏 共有ボタン（こちらは残しました） */}
           <button 
             onClick={() => {
               const text = `🏛️ The Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
@@ -160,7 +160,7 @@ export default function RoyalSleepCardApp() {
         </div>
       )}
 
-      {/* フッター（投げ銭リンクは跡形もありません） */}
+      {/* フッター（投げ銭リンクは完全に削除済みです） */}
       <div style={{ marginTop: '50px', textAlign: 'center', color: '#888' }}>
         <p style={{ fontSize: '10px', letterSpacing: '1px' }}>© 2026 THE ROYAL SLEEP BANK OF BRITAIN</p>
       </div>
