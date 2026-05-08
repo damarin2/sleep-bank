@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-// --- 🦁 動物階級データ（最新版） ---
+// --- 🦁 究極の生態学的データ + 英国流ジョーク（完成版） ---
 const ANIMAL_TIERS = [
   { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。空を飛びながら脳を半分ずつ寝かせているのかい？墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? Are you sleeping with half your brain while flying? I suggest landing before you crash." }] },
   { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？キリンの真似かい？脳への血圧が心配だから、早く長い首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe, are we? I'm worried about your blood pressure; give that long neck a rest." }] },
@@ -10,19 +10,19 @@ const ANIMAL_TIERS = [
   { maxHours: 6.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "巨体を維持するために食べるのが忙しいんだね。睡眠不足で足元がふらつかないように。", messageEn: "Too busy eating to sleep? I suppose maintaining that bulk takes priority over a proper nap." }] },
   { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "人間並みの睡眠時間だが、心休まる暇はなさそうだ。目を開けたまま寝ていないかい？", messageEn: "Human levels of rest, yet you still look startled. Are you sleeping with your eyes open?" }] },
   { maxHours: 11.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "実にお利口な睡眠時間だ。ロイヤルな気分で散歩に出かける準備はできているかな？", messageEn: "A sensible, royal nap. Ready for a brisk walk and some BBC Radio 4?" }] },
-  { maxHours: 14.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "今日はバンクホリデー（祝日）に違いない。巣穴（Sett）でのんびりしたまえ。夜中に庭を荒らす気力も十分だね。", messageEn: "Must be a bank holiday. Enjoy doing absolutely nothing in your sett. You're well-rested enough to cause chaos tonight." }] },
-  { maxHours: 19.5, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "戦略的休息のマスターだね。一日を無駄にしたのではない。人間が到底たどり着けない、至高の安らぎに到達しただけなのだから。", messageEn: "A masterclass in strategic repose. You haven’t wasted the day; you’ve merely achieved a level of serenity humans can only dream of." }] },
+  { maxHours: 14.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "今日はバンクホリデー（祝日）に違いない。巣穴でのんびりしたまえ。夜中に庭を荒らす気力も十分だね。", messageEn: "Must be a bank holiday. Enjoy doing absolutely nothing in your sett. You're well-rested enough to cause chaos tonight." }] },
+  { maxHours: 19.5, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "戦略的休息のマスターだね。一日を無駄にしたのではない。人間がたどり着けない、至高の安らぎに到達しただけなのだから。", messageEn: "A masterclass in strategic repose. You haven’t wasted the day; you’ve merely achieved a level of serenity humans can only dream of." }] },
   { maxHours: 99, animals: [{ nameJa: "コアラ", nameEn: "Koala", emoji: "🐨", messageJa: "22時間。おめでとう、君はユーカリの毒にやられたコアラだ。もはや銀行口座を解約しても気づかないだろうね。", messageEn: "22 hours. Congratulations, you’re a koala dazed by eucalyptus. You wouldn’t even notice if we closed your account." }] }
 ];
 
 export default function RoyalSleepCardApp() {
-  const [bedtime, setBedtime] = useState<string>("23:00");
-  const [wakeupTime, setWakeupTime] = useState<string>("06:30");
-  const [moodScore, setMoodScore] = useState<string>("5");
-  const [result, setResult] = useState<any>(null);
+  const [bedtime, setBedtime] = useState("23:00");
+  const [wakeupTime, setWakeupTime] = useState("06:30");
+  const [moodScore, setMoodScore] = useState("5");
+  const [result, setResult] = useState(null);
 
   const handleGenerate = () => {
-    const getHours = (s: string, e: string) => {
+    const getHours = (s, e) => {
       const [sh, sm] = s.split(':').map(Number);
       const [eh, em] = e.split(':').map(Number);
       let diff = (eh + em/60) - (sh + sm/60);
@@ -42,7 +42,7 @@ export default function RoyalSleepCardApp() {
     else if (hours <= 8.5) { legend = "World Leader Class"; reason = "A balanced, strategic rest for decision makers."; }
     else if (hours <= 11.5) { legend = "Einstein Class"; reason = "The essential long sleep required for a genius brain."; }
     else if (hours <= 14.5) { legend = "Holidaymaker Class"; reason = "Bank Holiday Spirit: Extensive burrowing and relaxation."; }
-    else if (hours <= 19.5) { legend = "The Zen Master"; reason = "Ecological Category: Apex Predator. High-status rest without enemies."; }
+    else if (hours <= 19.5) { legend = "The Zen Master"; reason = "Ecological Category: Apex Predator. High-status rest."; }
     else { legend = "Hibernation Class"; reason = "Ecological Alert: Eucalyptus overdose. Welcome to 22h of oblivion."; }
 
     const animal = ANIMAL_TIERS.find(t => hours < t.maxHours)?.animals[0];
@@ -51,106 +51,88 @@ export default function RoyalSleepCardApp() {
   };
 
   return (
-    <div style={{ padding: '40px 20px', fontFamily: '"Georgia", serif', maxWidth: '500px', margin: '0 auto', backgroundColor: '#F4F4EE', minHeight: '100vh', color: '#000' }}>
+    <div style={{ padding: '40px 20px', fontFamily: 'serif', maxWidth: '500px', margin: '0 auto', backgroundColor: '#F4F4EE', minHeight: '100vh', color: '#000' }}>
       
-      <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '20px', letterSpacing: '2px', marginBottom: '30px' }}>🏛️ THE ROYAL SLEEP BANK</h1>
+      <h1 style={{ textAlign: 'center', color: '#004225', fontSize: '22px', letterSpacing: '3px', marginBottom: '30px', fontWeight: 'bold' }}>🏛️ THE ROYAL SLEEP BANK</h1>
 
-      {/* 入力エリア */}
-      <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px' }}>
+      {/* --- 入力セクション --- */}
+      <div style={{ backgroundColor: '#fff', padding: '25px', border: '2px solid #333', borderRadius: '8px', marginBottom: '30px', boxShadow: '5px 5px 0px #333' }}>
         <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
           <div style={{ flex: 1 }}>
-            <label style={{ fontSize: '13px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>BEDTIME</label>
-            <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #444', fontSize: '16px' }} />
+            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>BEDTIME</label>
+            <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', boxSizing: 'border-box' }} />
           </div>
           <div style={{ flex: 1 }}>
-            <label style={{ fontSize: '13px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>WAKE UP</label>
-            <input type="time" value={wakeupTime} onChange={(e) => setWakeupTime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #444', fontSize: '16px' }} />
+            <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>WAKE UP</label>
+            <input type="time" value={wakeupTime} onChange={(e) => setWakeupTime(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', boxSizing: 'border-box' }} />
           </div>
         </div>
         <div style={{ marginBottom: '25px' }}>
-          <label style={{ fontSize: '13px', fontWeight: 'bold', display: 'block', marginBottom: '8px' }}>MORNING CONDITION (1-8)</label>
-          <select value={moodScore} onChange={(e) => setMoodScore(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #444', fontSize: '16px', backgroundColor: '#fff' }}>
+          <label style={{ fontSize: '12px', fontWeight: 'bold', display: 'block', marginBottom: '8px', color: '#555' }}>MORNING CONDITION (1-8)</label>
+          <select value={moodScore} onChange={(e) => setMoodScore(e.target.value)} style={{ width: '100%', padding: '12px', border: '2px solid #333', borderRadius: '4px', fontSize: '16px', backgroundColor: '#fff', boxSizing: 'border-box' }}>
             {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n === 8 ? "8 (Splendid)" : n === 1 ? "1 (Ghastly)" : n}</option>)}
           </select>
         </div>
-        <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px' }}>
+        <button onClick={handleGenerate} style={{ width: '100%', padding: '18px', backgroundColor: '#004225', color: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', borderRadius: '4px', letterSpacing: '1px' }}>
           ISSUE AUDIT STATEMENT
         </button>
       </div>
 
-      {/* 結果カード */}
+      {/* --- 結果カードセクション --- */}
       {result && (
-        <div style={{ animation: 'fadeIn 0.6s ease-out' }}>
+        <div style={{ animation: 'fadeIn 0.5s ease-out' }}>
           <div style={{ 
             backgroundColor: '#004225', 
             backgroundImage: 'linear-gradient(145deg, #004225 0%, #002515 100%)',
             color: '#D4AF37', 
-            padding: '30px', 
+            padding: '35px 25px', 
             borderRadius: '16px', 
             border: '2px solid #D4AF37',
             textAlign: 'center',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+            position: 'relative'
           }}>
-            <p style={{ fontSize: '11px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>OFFICIAL AUDIT</p>
-            <h2 style={{ fontSize: '26px', margin: '0' }}>🎖️ {result.legend}</h2>
-            <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '8px 0 15px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
+            <p style={{ fontSize: '10px', letterSpacing: '4px', margin: '0 0 10px 0', opacity: 0.8 }}>CERTIFIED BY THE ROYAL BANK</p>
+            <h2 style={{ fontSize: '28px', margin: '0', fontWeight: 'normal' }}>🎖️ {result.legend}</h2>
+            <p style={{ fontSize: '11px', fontStyle: 'italic', margin: '10px 0 15px 0', opacity: 0.8, borderBottom: '1px solid rgba(212,175,55,0.3)', paddingBottom: '15px' }}>
               {result.reason}
             </p>
 
-            <div style={{ fontSize: '70px', margin: '15px 0' }}>{result.animal.emoji}</div>
+            <div style={{ fontSize: '75px', margin: '20px 0' }}>{result.animal.emoji}</div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '20px 0', backgroundColor: 'rgba(255,255,255,0.07)', padding: '15px 10px', borderRadius: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '25px 0', backgroundColor: 'rgba(255,255,255,0.08)', padding: '20px 10px', borderRadius: '12px' }}>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>TOTAL BALANCE</p>
-                <p style={{ fontSize: '22px', margin: '2px 0', fontWeight: 'bold' }}>£{result.quid}</p>
+                <p style={{ fontSize: '24px', margin: '4px 0', fontWeight: 'bold' }}>£{result.quid}</p>
                 <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Rate: £50K × {result.hours}h × {result.score}/8</p>
               </div>
               <div style={{ width: '1px', backgroundColor: 'rgba(212, 175, 55, 0.4)' }}></div>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>CERTIFIED HOURS</p>
-                <p style={{ fontSize: '22px', margin: '2px 0', fontWeight: 'bold' }}>{result.hours}h</p>
-                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Certified by Royal Bank</p>
+                <p style={{ fontSize: '10px', margin: 0, opacity: 0.7 }}>SLEEP DURATION</p>
+                <p style={{ fontSize: '24px', margin: '4px 0', fontWeight: 'bold' }}>{result.hours}h</p>
+                <p style={{ fontSize: '8px', margin: 0, opacity: 0.6 }}>Species: {result.animal.nameEn}</p>
               </div>
             </div>
 
-            <p style={{ fontSize: '15px', fontStyle: 'italic', lineHeight: '1.4', margin: '15px 0 5px 0' }}>"{result.animal.messageEn}"</p>
-            <p style={{ fontSize: '11px', opacity: 0.8 }}>({result.animal.messageJa})</p>
+            <p style={{ fontSize: '16px', fontStyle: 'italic', lineHeight: '1.5', margin: '20px 0 10px 0' }}>"{result.animal.messageEn}"</p>
+            <p style={{ fontSize: '12px', opacity: 0.8, margin: 0 }}>({result.animal.messageJa})</p>
           </div>
 
           <button onClick={() => {
-            const text = `🏛️ The Royal Sleep Bank\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
+            const text = `🏛️ The Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Balance: £${result.quid}\n\n"${result.animal.messageEn}"\n#RoyalSleepBank`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
-          }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold' }}>
-            𝕏 SHARE THIS AUDIT
+          }} style={{ width: '100%', padding: '16px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}>
+            𝕏 SHARE YOUR STATEMENT
           </button>
         </div>
       )}
 
-      {/* 💡 ここにあなたのBMACリンクを反映しました */}
-      <div style={{ marginTop: '60px', textAlign: 'center', borderTop: '2px solid #D1D1C6', paddingTop: '30px' }}>
-        <p style={{ fontSize: '14px', color: '#555', fontStyle: 'italic', marginBottom: '15px' }}>Found this bank helpful? The Manager's tea cup is empty.</p>
-        <a 
-          href="https://buymeacoffee.com/royal_sleep_manage" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{ 
-            color: '#004225', 
-            fontWeight: 'bold', 
-            textDecoration: 'none', 
-            border: '2px solid #004225', 
-            padding: '12px 24px', 
-            borderRadius: '4px', 
-            display: 'inline-block',
-            backgroundColor: '#fff'
-          }}
-        >
-          🫖 Buy the Manager a proper brew (£2.50)
-        </a>
+      {/* フッター（リンクなしのクリーン版） */}
+      <div style={{ marginTop: '50px', textAlign: 'center', color: '#888' }}>
+        <p style={{ fontSize: '11px', letterSpacing: '1px' }}>© 2026 THE ROYAL SLEEP BANK OF BRITAIN</p>
+        <p style={{ fontSize: '10px', marginTop: '5px' }}>Where your laziness is our most valued asset.</p>
       </div>
 
-      <style jsx>{`
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      `}</style>
     </div>
   );
 }
