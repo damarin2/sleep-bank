@@ -3,20 +3,26 @@
 import React, { useState } from 'react';
 
 // --- 型定義 ---
-interface Animal { nameJa: string; nameEn: string; emoji: string; messageJa: string; messageEn: string; }
+interface Animal { 
+  nameJa: string; 
+  nameEn: string; 
+  emoji: string; 
+  messageJa: string; 
+  messageEn: string;
+}
 interface AnimalTier { maxHours: number; animals: Animal[]; }
-interface ResultData { hours: string; quid: string; score: number; legend: string; reason: string; animal: Animal; }
+interface ResultData { hours: string; quid: string; score: number; legend: string; animal: Animal; }
 
 const ANIMAL_TIERS: AnimalTier[] = [
-  { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? I suggest landing before you crash." }] },
-  { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？脳への血圧が心配だから早く首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe? Give that neck a rest." }] },
-  { maxHours: 4.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。", messageEn: "Sleeping while standing? A true herbivore." }] },
-  { maxHours: 6.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "巨体を維持するために食べるのが忙しいんだね。", messageEn: "Too busy eating to sleep?" }] },
-  { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "目を開けたまま寝ていないかい？", messageEn: "Are you sleeping with your eyes open?" }] },
-  { maxHours: 11.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "実にお利口な睡眠時間だ。散歩の準備はいいかな？", messageEn: "A sensible, royal nap." }] },
-  { maxHours: 14.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "今日はバンクホリデーに違いない。巣穴でのんびりしたまえ。", messageEn: "Must be a bank holiday. Enjoy your sett." }] },
-  { maxHours: 19.5, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "戦略的休息のマスターだ。至高の安らぎに到達したのだね。", messageEn: "A masterclass in strategic repose." }] },
-  { maxHours: 99, animals: [{ nameJa: "コアラ", nameEn: "Koala", emoji: "🐨", messageJa: "22時間。君はユーカリの毒にやられたコアラだ。", messageEn: "22 hours. Congratulations, you’re a dazed koala." }] }
+  { maxHours: 0.5, animals: [{ nameJa: "渡り鳥", nameEn: "Migrating Bird", emoji: "🕊️", messageJa: "0時間。空を飛びながら脳を半分ずつ寝かせているのかい？墜落する前に着陸することをお勧めするよ。", messageEn: "Zero hours? Are you sleeping with half your brain while flying? I suggest landing before you crash." }] },
+  { maxHours: 2.5, animals: [{ nameJa: "キリン", nameEn: "Giraffe", emoji: "🦒", messageJa: "1.9時間？キリンの真似かい？脳への血圧が心配だから早く長い首を休めたまえ。", messageEn: "1.9 hours? Mimicking a giraffe? Give that long neck a rest." }] },
+  { maxHours: 4.5, animals: [{ nameJa: "ウマ", nameEn: "Horse", emoji: "🐎", messageJa: "立ったまま寝ていたのかい？草食動物の鑑だね。常に警戒を怠らないのは立派だよ。", messageEn: "Sleeping while standing? A true herbivore. Your vigilance is commendable." }] },
+  { maxHours: 6.5, animals: [{ nameJa: "ゾウ", nameEn: "Elephant", emoji: "🐘", messageJa: "巨体を維持するために食べるのが忙しいんだね。睡眠不足で足元がふらつかないように。", messageEn: "Too busy eating to sleep? I suppose maintaining that bulk takes priority over a proper nap." }] },
+  { maxHours: 8.5, animals: [{ nameJa: "ウサギ", nameEn: "Rabbit", emoji: "🐇", messageJa: "人間並みの睡眠時間だが心休まる暇はなさそうだ。目を開けたまま寝ていないかい？", messageEn: "Human levels of rest, yet you still look startled. Are you sleeping with your eyes open?" }] },
+  { maxHours: 11.5, animals: [{ nameJa: "コーギー", nameEn: "Corgi", emoji: "🐶", messageJa: "実にお利口な睡眠時間だ。ロイヤルな気分で散歩に出かける準備はできているかな？", messageEn: "A sensible, royal nap. Ready for a brisk walk?" }] },
+  { maxHours: 14.5, animals: [{ nameJa: "アナグマ", nameEn: "Badger", emoji: "🦡", messageJa: "今日はバンクホリデー（祝日）に違いない。巣穴でのんびりしたまえ。夜中に庭を荒らす気力も十分だね。", messageEn: "Must be a bank holiday. Enjoy doing absolutely nothing in your sett." }] },
+  { maxHours: 19.5, animals: [{ nameJa: "ネコ", nameEn: "Cat", emoji: "🐈", messageJa: "戦略的休息のマスターだね。人間がたどり着けない、至高の安らぎに到達しただけなのだから。", messageEn: "A masterclass in strategic repose. You’ve achieved a level of serenity humans can only dream of." }] },
+  { maxHours: 99, animals: [{ nameJa: "コアラ", nameEn: "Koala", emoji: "🐨", messageJa: "22時間。おめでとう、君はユーカリの毒にやられたコアラだ。もはや銀行口座を解約しても気づかないだろうね。", messageEn: "22 hours. Congratulations, you’re a koala dazed by eucalyptus. You wouldn’t even notice if we closed your account." }] }
 ];
 
 export default function RoyalSleepCardApp() {
@@ -40,7 +46,7 @@ export default function RoyalSleepCardApp() {
     let legend = hours <= 0.5 ? "Aviator Class" : hours <= 2.5 ? "Giraffe Class" : hours <= 4.5 ? "Napoleon Class" : hours <= 8.5 ? "World Leader Class" : hours <= 11.5 ? "Einstein Class" : hours <= 14.5 ? "Holidaymaker Class" : hours <= 19.5 ? "The Zen Master" : "Hibernation Class";
     const tier = ANIMAL_TIERS.find(t => hours < t.maxHours) || ANIMAL_TIERS[ANIMAL_TIERS.length - 1];
 
-    setResult({ hours: hours.toFixed(1), quid: formattedQuid, score: score, legend: legend, reason: "Certified Sleep Audit", animal: tier.animals[0] });
+    setResult({ hours: hours.toFixed(1), quid: formattedQuid, score: score, legend: legend, animal: tier.animals[0] });
   };
 
   return (
@@ -72,37 +78,49 @@ export default function RoyalSleepCardApp() {
       {result && (
         <div style={{ animation: 'fadeIn 0.5s ease-out' }}>
           <div style={{ backgroundColor: '#004225', color: '#D4AF37', padding: '30px', borderRadius: '16px', border: '2px solid #D4AF37', textAlign: 'center' }}>
-            <p style={{ fontSize: '10px', letterSpacing: '2px' }}>OFFICIAL AUDIT</p>
-            <h2 style={{ fontSize: '24px', margin: '5px 0' }}>{result.legend}</h2>
-            <div style={{ fontSize: '70px', margin: '15px 0' }}>{result.animal.emoji}</div>
+            <p style={{ fontSize: '10px', letterSpacing: '2px' }}>OFFICIAL AUDIT REPORT</p>
+            <h2 style={{ fontSize: '24px', margin: '5px 0 0 0', fontWeight: 'normal' }}>{result.legend}</h2>
+            <p style={{ fontSize: '14px', margin: '2px 0 10px 0', opacity: 0.9, fontWeight: 'bold' }}>- {result.animal.nameJa} ({result.animal.nameEn}) -</p>
+
+            <div style={{ fontSize: '75px', margin: '20px 0' }}>{result.animal.emoji}</div>
             
-            {/* スコア表示（ただのテキストです。ボタンではありません） */}
-            <div style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: 'rgba(255,255,255,0.08)', padding: '15px', borderRadius: '12px', margin: '20px 0' }}>
-              <div>
-                <p style={{ fontSize: '10px', margin: 0 }}>SLEEP SCORE</p>
-                <p style={{ fontSize: '20px', fontWeight: 'bold', margin: 0 }}>£{result.quid}</p>
+            {/* スコア・時間表示 */}
+            <div style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: 'rgba(255,255,255,0.08)', padding: '15px 10px', borderRadius: '12px', margin: '20px 0' }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: '10px', margin: 0, opacity: 0.8 }}>TOTAL BALANCE</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', margin: '2px 0' }}>£{result.quid}</p>
+                <p style={{ fontSize: '8px', margin: '2px 0 0 0', opacity: 0.6, fontFamily: 'monospace' }}>
+                  Rate: £50K × {result.hours}h × {result.score}/8
+                </p>
               </div>
-              <div>
-                <p style={{ fontSize: '10px', margin: 0 }}>DURATION</p>
-                <p style={{ fontSize: '20px', fontWeight: 'bold', margin: 0 }}>{result.hours}h</p>
+              <div style={{ width: '1px', backgroundColor: 'rgba(212, 175, 55, 0.3)' }}></div>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: '10px', margin: 0, opacity: 0.8 }}>AUDITED DURATION</p>
+                <p style={{ fontSize: '22px', fontWeight: 'bold', margin: '2px 0' }}>{result.hours}h</p>
+                <p style={{ fontSize: '8px', margin: '2px 0 0 0', opacity: 0.6 }}>Certified standard</p>
               </div>
             </div>
 
-            <p style={{ fontSize: '14px', fontStyle: 'italic' }}>"{result.animal.messageEn}"</p>
-            <p style={{ fontSize: '11px', opacity: 0.8 }}>({result.animal.messageJa})</p>
+            <p style={{ fontSize: '15px', fontStyle: 'italic', margin: '15px 0 5px 0', lineHeight: '1.4' }}>"{result.animal.messageEn}"</p>
+            <p style={{ fontSize: '11px', opacity: 0.8, margin: 0 }}>({result.animal.messageJa})</p>
           </div>
 
-          {/* 𝕏 シェアボタン（これだけは残しています） */}
+          {/* 𝕏 シェアボタン */}
           <button onClick={() => {
-            const text = `🏛️ Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend}\n🦁 Animal: ${result.animal.nameEn}\n💰 Score: £${result.quid}\n#RoyalSleepBank`;
+            const text = `🏛️ Royal Sleep Bank Audit\n🎖️ Rating: ${result.legend} (${result.animal.nameEn})\n💰 Score: £${result.quid}\n📊 Formula: £50K × ${result.hours}h × ${result.score}/8\n#RoyalSleepBank`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`);
           }} style={{ width: '100%', padding: '15px', backgroundColor: '#1A2421', color: '#fff', border: 'none', borderRadius: '8px', marginTop: '20px', cursor: 'pointer', fontWeight: 'bold' }}>𝕏 SHARE RESULT</button>
         </div>
       )}
 
-      {/* フッター：ここにリンクがないことを確認してください */}
-      <footer style={{ marginTop: '50px', textAlign: 'center', color: '#888', fontSize: '10px' }}>
-        © 2026 THE ROYAL SLEEP BANK OF BRITAIN
+      {/* --- フッター（セキュリティ宣言を追加！） --- */}
+      <footer style={{ marginTop: '50px', textAlign: 'center', color: '#888', fontSize: '10px', lineHeight: '1.6' }}>
+        <p style={{ margin: '0 0 4px 0', fontStyle: 'italic', letterSpacing: '0.5px' }}>
+          🔒 your data never leaves this device. No servers. No tracking.
+        </p>
+        <p style={{ margin: 0, opacity: 0.7 }}>
+          © 2026 THE ROYAL SLEEP BANK OF BRITAIN
+        </p>
       </footer>
     </div>
   );
